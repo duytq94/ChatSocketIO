@@ -36,15 +36,16 @@ io.on('connection', function(socket) {
 		delete users[socket.nickname];
 	})
 
-	socket.on('send_message', function(content, timestamp, typeMessage) {
+	socket.on('send_message', function(content, toGroup, timestamp, typeMessage) {
       	socket.broadcast.emit('receive_message', {
     		from_user: socket.nickname,
     		content: content,
+    		to_group: toGroup,
     		time_arrive: timestamp,
     		type_message: typeMessage
       	});
 
-    	var sql = 'INSERT INTO archive(from_user, to_group, content, time_arrive, type_message) VALUES (' + '"' + socket.nickname + '", "testgroup"' + ', "' + content + '", "' + timestamp + '", "' + typeMessage + '")';
+    	var sql = 'INSERT INTO archive(from_user, to_group, content, time_arrive, type_message) VALUES (' + '"' + socket.nickname + '", "' + toGroup + '", "' + content + '", "' + timestamp + '", "' + typeMessage + '")';
     	
     	conn.query(sql, function(err) {
     		if (err) throw err;
