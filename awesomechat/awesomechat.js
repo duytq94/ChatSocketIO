@@ -63,9 +63,8 @@ io.on('connection', function(socket) {
 			socket.nickname = username;
 			users[socket.nickname] = socket;
 
-			socket.broadcast.to(socket.room).emit('join_room', {
-				username: username,
-   	 			message: 'joined this room'
+			socket.broadcast.to(socket.room).emit('a_user_join_room', {
+				username: username
    		 	});
 		}
 	});
