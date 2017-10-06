@@ -1,5 +1,3 @@
-
-// Khai bao bien
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -13,13 +11,13 @@ var conn = mysql.createConnection({
 });
 
 conn.connect(function(err) {
-	if (err) throw err.stack;
-	console.log('Connect database success');
+	if (err) {
+		console.log(err);
+	} else {
+		console.log('Connect database success');
+	}
 });
 
-// app.get('/', function(req, res){
-// 	res.sendFile(__dirname + '/welcome.html');
-// });
 
 http.listen(3000, function(){
 	console.log('Server socket listening on port: 3000');
@@ -29,12 +27,37 @@ http.listen(3000, function(){
 io.on('connection', function(socket) {
 
 	socket.on('disconnect', function() {
-		socket.broadcast.to(socket.room).emit('leave_room', {
-				username: socket.nickname,
-   	 			message: 'leave room'
+		socket.broadcast.to(socket.room).emit('a_user_leave_room', {
+				username: socket.nickname
    		 	});
+
+		var isExist = 'SELECT * FROM users WHERE email = "' + socket.nickname + '"';
+		conn.query(isExist, function(err, result) {
+			if (err) {
+			 	console.log(err);
+			 	return;
+			}
+			if (result != "") {
+			 	var sql = 'UPDATE users SET is_online = 0 WHERE email = "' + socket.nickname + '"';
+			 	conn.query(sql, function(err) {
+   		 			if (err) {
+   		 				console.log(err);
+   		 			}
+   				});
+			} else {
+			 	var sql = 'INSERT INTO users(email, is_online) VALUES ("' + socket.nickname + '", 0)';
+				conn.query(sql, function(err) {
+   		 			if (err) {
+   		 				console.log(err);
+   		 			}
+   				});
+			}
+		}); 
+
 		delete users[socket.nickname];
 	})
+
+
 
 	socket.on('send_message', function(content, timestamp, typeMessage) {
       	socket.broadcast.to(socket.room).emit('receive_message', {
@@ -48,14 +71,17 @@ io.on('connection', function(socket) {
     	var sql = 'INSERT INTO archive(from_user, to_group, content, time_arrive, type_message) VALUES (' + '"' + socket.nickname + '", "' + socket.room + '", "' + content + '", "' + timestamp + '", "' + typeMessage + '")';
     	
     	conn.query(sql, function(err) {
-    		if (err) throw err;
+    		if (err) {
+    			console.log(err);
+    		}
         });
  	 });
+
+
 
 	socket.on('join_room', function(username, room) {
 		if (username in users) {
 			console.log("User connect fail");
-			return;
 		} else {
 			console.log("User connected");
 			socket.room = room;
@@ -64,8 +90,31 @@ io.on('connection', function(socket) {
 			users[socket.nickname] = socket;
 
 			socket.broadcast.to(socket.room).emit('a_user_join_room', {
-				username: username
+				username: socket.nickname
    		 	});
+
+		 var isExist = 'SELECT * FROM users WHERE email = "' + socket.nickname + '"';
+		 conn.query(isExist, function(err, result) {
+			if (err) {
+			 	console.log(err);
+			 	return;
+			}
+			if (result != "") {
+			 	var sql = 'UPDATE users SET is_online = 1 WHERE email = "' + socket.nickname + '"';
+			 	conn.query(sql, function(err) {
+   		 			if (err) {
+   		 				console.log(err);
+   		 			}
+   				});
+			} else {
+			 	var sql = 'INSERT INTO users(email, is_online) VALUES ("' + socket.nickname + '", 1)';
+				conn.query(sql, function(err) {
+   		 			if (err) {
+   		 				console.log(err);
+   		 			}
+   				});
+			}
+		 }); 		
 		}
 	});
 
