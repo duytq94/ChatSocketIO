@@ -20,7 +20,7 @@ conn.connect(function(err) {
 
 
 http.listen(3000, function(){
-	console.log('Server socket listening on port: 3000');
+	console.log('Server socket chat listening on port: 3000');
 });
 
 
