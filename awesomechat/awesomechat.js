@@ -55,8 +55,11 @@ io.on('connection', function(socket) {
 		 }); 	
 
 		delete users[socket.nickname];
+		console.log("User disconnected")
 	})
 
+
+//----------------------------------------------------------------------------------------------------------------------------------------
 
 
 	socket.on('send_message', function(content, timestamp, typeMessage) {
@@ -77,6 +80,7 @@ io.on('connection', function(socket) {
         });
  	 });
 
+//-----------------------------------------------------------------------------------------------------------------------------------------
 
 
 	socket.on('join_room', function(username, room) {
@@ -94,7 +98,7 @@ io.on('connection', function(socket) {
    		 	});
 
 		 var isExist = 'SELECT * FROM users WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
-		 console.log(isExist);
+
 		 conn.query(isExist, function(err, result) {
 			if (err) {
 			 	console.log(err);
