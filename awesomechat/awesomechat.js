@@ -31,21 +31,21 @@ io.on('connection', function(socket) {
 				username: socket.nickname
    		 	});
 
-		var isExist = 'SELECT * FROM users WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
+		var isExist = 'SELECT * FROM user_chat WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
 		 conn.query(isExist, function(err, result) {
 			if (err) {
 			 	console.log(err);
 			 	return;
 			}
 			if (result != "") {
-			 	var sql = 'UPDATE users SET is_online = 0 WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
+			 	var sql = 'UPDATE user_chat SET is_online = 0 WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
 			 	conn.query(sql, function(err) {
    		 			if (err) {
    		 				console.log(err);
    		 			}
    				});
 			} else {
-			 	var sql = 'INSERT INTO users(email, is_online, to_group) VALUES ("' + socket.nickname + '", 0, "' + socket.room + '")';
+			 	var sql = 'INSERT INTO user_chat(email, is_online, to_group) VALUES ("' + socket.nickname + '", 0, "' + socket.room + '")';
 				conn.query(sql, function(err) {
    		 			if (err) {
    		 				console.log(err);
@@ -97,7 +97,7 @@ io.on('connection', function(socket) {
 				username: socket.nickname
    		 	});
 
-		 var isExist = 'SELECT * FROM users WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
+		 var isExist = 'SELECT * FROM user_chat WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
 
 		 conn.query(isExist, function(err, result) {
 			if (err) {
@@ -105,14 +105,14 @@ io.on('connection', function(socket) {
 			 	return;
 			}
 			if (result != "") {
-			 	var sql = 'UPDATE users SET is_online = 1 WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
+			 	var sql = 'UPDATE user_chat SET is_online = 1 WHERE email = "' + socket.nickname + '" AND to_group = "' + socket.room + '"';
 			 	conn.query(sql, function(err) {
    		 			if (err) {
    		 				console.log(err);
    		 			}
    				});
 			} else {
-			 	var sql = 'INSERT INTO users(email, is_online, to_group) VALUES ("' + socket.nickname + '", 1, "' + socket.room + '")';
+			 	var sql = 'INSERT INTO user_chat(email, is_online, to_group) VALUES ("' + socket.nickname + '", 1, "' + socket.room + '")';
 				conn.query(sql, function(err) {
    		 			if (err) {
    		 				console.log(err);
