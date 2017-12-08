@@ -6,7 +6,7 @@ var mysql = require('mysql');
 var conn = mysql.createConnection({
     host    : 'localhost',
     user    : 'root',
-    password: '123456',
+    password: 'Tu0denchin_123',
     database: 'chat_io'
 });
 
