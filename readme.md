@@ -10,10 +10,15 @@ This is an simple server chat implement with SocketIO
 
 ## Installing
 
-Node:
+NodeJS & NPM:
 ```
 apt-get install nodejs
 apt-get install npm
+```
+
+PhpMyAdmin (if you want to manage database, require install MySql & Apache first):
+```
+apt-get install phpmyadmin
 ```
 
 MySql:
@@ -25,10 +30,4 @@ If you have error "Cannot find module "mysql" -> npm install mysql
 Apache2:
 ```
 apt-get install apache2
-```
-
-PhpMyAdmin:
-```
-apt-get install phpmyadmin
-(remember check apache2)
 ```
