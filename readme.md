@@ -2,7 +2,7 @@
 
 This is an simple server chat implement with SocketIO
 
-## Infor connect
+## Info connect
 
 * Host: localhost
 * User: root
@@ -16,12 +16,12 @@ apt-get install nodejs
 apt-get install npm
 ```
 
-PhpMyAdmin (if you want to manage database, require install MySql & Apache first):
+PhpMyAdmin (if you want to manage database, require install MySQL server & Apache at first):
 ```
 apt-get install phpmyadmin
 ```
 
-MySql:
+MySQL server:
 ```
 apt-get install mysql-server
 If you have error "Cannot find module "mysql" -> npm install mysql
@@ -30,4 +30,9 @@ If you have error "Cannot find module "mysql" -> npm install mysql
 Apache2:
 ```
 apt-get install apache2
+```
+
+## Run
+```
+node server_api.js
 ```
