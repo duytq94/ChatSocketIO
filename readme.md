@@ -16,7 +16,7 @@ apt-get install nodejs
 apt-get install npm
 ```
 
-phpMyAdmin (if you want to manage database, require install PHP, MySQL server and Apache at first):
+phpMyAdmin (if you want to manage database, require install PHP, MySQL server, Apache at first):
 ```
 apt-get install phpmyadmin
 ```
