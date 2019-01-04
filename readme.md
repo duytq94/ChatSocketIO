@@ -34,5 +34,5 @@ apt-get install apache2
 
 ## Run
 ```
-node server_api.js
+node awesomechat.js
 ```
